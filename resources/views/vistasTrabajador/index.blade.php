@@ -44,7 +44,14 @@
                     <td>{{ $trabajador->telefono}}</td>
                     <td>{{ $trabajador->correo}}</td>
                     <td>{{ $trabajador->horas}}</td>
-                    <td>{{ $trabajador->status}}</td>
+
+                    @if ($trabajador->status==1)
+                        <td><p class="text-success">Activo</p></td> 
+                    @elseif($trabajador->status==0)
+                        <td><p class="text-secondary">Inactivo</p></td> 
+                    @else
+                        <td><p class="font-weight-bold">Pendiente</p></td> 
+                    @endif
 
                     <td>
                         <form action="{{ route('trabajadores.destroy',$trabajador->id) }}" method="POST">
@@ -73,7 +80,6 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -82,5 +88,20 @@
             $(document).ready(function () {
                 $('#tablaMaterias').DataTable();
             });
+            $('#tablaMaterias').DataTable( {
+            language: {
+                search: "Buscar:",
+                lengthMenu:"Mostrar _MENU_ registros por página",
+                zeroRecords:"No se encontró ningún registro",
+                info: "Mostrando la página _PAGE_ de _PAGES_",
+                infoEmpty: "No hay registros disponibles",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                paginate: {
+                    'next':'siguiente',
+                    'previous':'anterior'
+                    }
+
+                }
+            } );
         </script>
 @stop

@@ -59,8 +59,10 @@ class AlumnoController extends Controller
 
     public function edit($id)
     {
+        $tutores=Tutor::all();
+        $grupos=Grupo::all();
         $persona = Alumno::find($id)->persona;
-        return view('vistasAlumno.update', compact('persona'));
+        return view('vistasAlumno.update', compact('persona','tutores','grupos'));
     }
 
     public function update(Request $request, $id)
@@ -79,6 +81,7 @@ class AlumnoController extends Controller
         $alumno->status = $request->get('status');
         $alumno->fechaInscripcion = $request->get('fechaInscripcion');
         $alumno->grado = $request->get('grado');
+
         $alumno->tutor_id = $request->get('tutor_id');
         $alumno->grupo_id = $request->get('grupo_id');
 
@@ -99,12 +102,23 @@ class AlumnoController extends Controller
         $this->validate($request, [
             'nombre'=>'required',
             'apellido_p'=>'required',
-            'apellido_m'=>'required',
+            'fecha_nacimiento'=>'required|date|before:-5 year',
             'sexo'=>'required',
             'curp'=>'required',
             'status'=>'required',
             'fechaInscripcion'=>'required',
             'grado'=>'required'
+        ],
+        [   'nombre.required'=>'El nombre es requerido',
+            'apellido_p.required'=>'El primer apellido es obligatorio',
+            'apellido_m.required'=>'El segundo apellido es obligatorio',
+            'sexo.required'=>'Debe ingresar el seXo del alumn@',
+            'fecha_nacimiento.required'=>'Es obligatoria la fecha de nacimiento',
+            'fecha_nacimiento.before'=>'El almn@ debe tener al menos 5 años',
+            'curp.required'=>'El CURP es obligatorio',
+            'status.required'=>'El status es obligatorio',
+            'fechaInscripcion.required'=>'La fecha de inscripción es obligatoria',
+            'grado.required'=>'¿a qué grado va a ingresar el aluimno (informatio)?'
         ]);
     }
 

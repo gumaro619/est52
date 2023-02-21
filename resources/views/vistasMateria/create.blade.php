@@ -13,21 +13,33 @@
 
 @section('content')
     <!-- un submit activa automaticamnte el metodo store() en el controlador que invoca, NO SE LLAMA-->
+    <datalist id="materias">
+        <option value="ESPAÑOL I"></option>
+        <option value="ESPAÑOL II"></option>
+        <option value="ESPAÑOL III"></option>
+        <option value="MATEMÁTICAS I"></option>
+        <option value="MATEMÁTICAS II"></option>
+        <option value="MATEMÁTICAS III"></option>
+        <option value="BIOLOGÍA"></option>
+        <option value="FÍSICA"></option>
+        <option value="QUÍMICA"></option>
+        <option value="EDUC. FÍSICA"></option>
+    </datalist>
+    
     <form action="/materias" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="" class="form-label">Nombre: </label>
-            <div id="leyendaNombre" class="form-text">nombre o tag para identificar la materia</div>
-            <input type="text" 
+            <label class="form-label">Nombre: </label>
+            <input type="text" autocomplete="off" list="materias"
                 class="form-control" 
                 name="nombre" 
                 id="nombre" 
                 value="{{ old('nombre') }}"
                 placeholder=""  
                 autofocus>
-                
-                {!! $errors->first('nombre','<span class=error>:message</span>') !!}
-            
+                @error('nombre')
+                    <p class="errores">*{{ $message }}</p><br>
+                @enderror
         </div>
 
         <div class="mb-3">
@@ -38,7 +50,9 @@
                 name="programa" 
                 value="{{ old('programa') }}">
                 <span></span>
-            {!! $errors->first('programa','<span class=error>:message</span>') !!}
+                @error('programa')
+                    <p class="errores">*{{ $message }}</p><br>
+                @enderror
         </div>
         
         
@@ -50,6 +64,11 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .errores{
+            color: rgb(201, 37, 37);
+        }
+    </style>
 @stop
 
 @section('js')

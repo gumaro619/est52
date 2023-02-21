@@ -4,8 +4,8 @@
     <h1>INDEX REPORTES</h1>
 @endsection
 
-@section('hrefCrear')
-    {{ route('reportes.create') }}
+@section('bodi')
+    <a href="{{ route('reportes.create') }}" class="btn btn-primary" id="btnCrear" class="botones">CREAR</a>
 @endsection
 
 @section('columnasTHead')

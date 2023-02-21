@@ -4,8 +4,8 @@
     <h1>INDEX TUTORES</h1>
 @endsection
 
-@section('hrefCrear')
-    {{ route('tutores.create') }}
+@section('bodi')
+    <a href="{{ route('tutores.create') }}" class="btn btn-primary" id="btnCrear" class="botones">CREAR</a>
 @endsection
 
 @section('columnasTHead')
@@ -40,7 +40,7 @@
 
             <td>{{ $tutor->telefono_1}}</td>
             <td>{{ $tutor->telefono_2}}</td>
-            <td>{{ $tutor->correo}}</td>
+            <td>{{ $tutor->correo }}</td>
             <td>{{ $tutor->estado}}</td>
             <td>{{ $tutor->municipio}}</td>
             <td>{{ $tutor->colonia}}</td>

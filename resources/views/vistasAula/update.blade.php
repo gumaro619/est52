@@ -14,7 +14,7 @@
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp" value="{{ $aula->nombre }}">
-            <div id="leyendaNombre" class="form-text">nombre o tag para identificar el aula</div>
+            <p class="errores">{!! $errors->first('nombre','<span class=error>:message</span>') !!}</p>
         </div>
 
         <div class="mb-3">

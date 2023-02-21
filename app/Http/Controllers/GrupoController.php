@@ -35,11 +35,10 @@ class GrupoController extends Controller
         $this->validar($request);
 
         $grupo=new Grupo();
-        $grupo->nombre=$request->get('grados') . $request->get('grupos');
+        $grupo->nombre=$request->get('grados')."°". $request->get('grupos');
 
         if($request->get('grupos')=="X"){
-            $this->validar($request);
-            $grupo->nombre=$request->get('grados') . $request->get('otro');
+            $grupo->nombre=$request->get('grados')."°".$request->get('otro');
         }
         
 
@@ -63,13 +62,14 @@ class GrupoController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        $this->validarEdit($request, $id);
         $grupoAEditar=Grupo::find($id);
-        $nombre=$request->get('nombre').$request->get('grupo');
 
-        $grupoAEditar->nombre=$nombre;
+        $grupoAEditar->nombre=$request->get('grados')."°". $request->get('grupos');
+        if($request->get('grupos')=="X"){
+            $grupoAEditar->nombre=$request->get('grados')."°".$request->get('otro');
+        }
         $grupoAEditar->ciclo=$request->get('ciclo1')."-".$request->get('ciclo2');
-
 
         $grupoAEditar->save();
         return redirect('/grupos');
@@ -87,10 +87,34 @@ class GrupoController extends Controller
     {
         //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
         $this->validate($request, [
-            'otro'=>'required_if:grupos,X',
-            'ciclo1'=>'required',
-            'ciclo2'=>'required'
-        ]);
+                'otro'=>'required_if:grupos,X',
+                'ciclo1'=>'required',
+                'ciclo2'=>'required',
+                'grupoFinal' => 'required|unique:Grupo,nombre,NULL,NULL,ciclo,'.$request->get('ciclo1')."-".$request->get('ciclo2')
+            ],
+            [   
+                'grupoFinal.unique'=>'Este grupo ya existe en el ciclo escolar dado',
+                'ciclo1.required'=>'Debe ingresar  el ciclo escolar ',
+                'otro.required_if'=>'Ha seleccionado la opción  "otro", Debe especificar el grupo'
+            ]
+        );
+    }
+
+    public function validarEdit(Request $request, $id)
+    {
+        //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
+        $this->validate($request, [
+                'otro'=>'required_if:grupos,X',
+                'ciclo1'=>'required',
+                'ciclo2'=>'required',
+                'grupoFinal' => 'required|unique:Grupo,nombre,'.$id.',id,ciclo,'.$request->get('ciclo1')."-".$request->get('ciclo2')
+            ],
+            [   
+                'grupoFinal.unique'=>'Este grupo ya existe en el ciclo escolar dado',
+                'ciclo1.required'=>'Debe ingresar  el ciclo escolar ',
+                'otro.required_if'=>'Ha seleccionado la opción  "otro", Debe especificar el grupo'
+            ]
+        );
     }
 
 }

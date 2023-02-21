@@ -85,8 +85,12 @@ class MateriaController extends Controller
     {
         //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
         $this->validate($request, [
-            'nombre'=>'required|between:3,10',
-            'programa'=>'required'
+            'programa'=>'required',
+            'nombre' => 'required|unique:Materia,nombre,NULL,NULL,programa,'.$request->get('programa')
+        ],
+        [   
+            'required'=>'Este dato es obligatorio',
+            'unique'=>'ya existe esta materia y programa'
         ]);
     }
 }

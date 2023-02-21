@@ -23,7 +23,7 @@ class Trabajador extends Model
 
     //relación uno a muchos
     public function reportes(){
-        return $this->hasMany('App\Models\Reportes');
+        return $this->hasMany('App\Models\Reporte');
     }
 
 }

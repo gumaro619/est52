@@ -41,19 +41,26 @@
 
         <label class="form-label">Sexo: </label>
         <div class="form-check">
-            <input type="radio" class="form-check-input" id="masculino" name="sexo" value="M" @checked(old('sexo',$persona->sexo=='M')) >
+            <input type="radio" class="form-check-input" id="M" name="sexo" value="M" @if(old('sexo')=='M')
+                checked
+            @elseif($persona->sexo=='M'&&old('sexo')==null)
+                checked
+            @endif>
             <label class="form-check-label" for="masculino">Masculino</label>
         </div>
         <div class="form-check mb-3">
-            <input type="radio" class="form-check-input" id="femenino " name="sexo" value="F" @checked(old('sexo',$persona->sexo=='F')) >
+            <input type="radio" class="form-check-input" id="F" name="sexo" value="F" @if(old('sexo')=='F')
+                checked
+            @elseif($persona->sexo=='F'&&old('sexo')==null)
+                checked
+            @endif>
             <label class="form-check-label" for="femenino">Femenino</label>
-            <div class="invalid-feedback">Debe seleccionar el sexo</div>
-            <br>
             @error('sexo')
-                <small>*{{ $message }}</small>
+                <small class="errores">*{{ $message }}</small>
                 <br>
             @enderror
         </div>
+
 
 
         <div class="mb-3">
@@ -67,15 +74,22 @@
         
         @yield('inputsFormulario')
         
+        <button type="submit" class="btn btn-primary" tabindex="@yield('tab')">Guardar</button>
         <a href="@yield('hrefCancelar')" class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
     </form>
 
 @stop
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .errores{
+            color: rgb(173, 14, 14);
+        }
+    </style>
+    @yield('css')
 @stop
 
 @section('js')
+    @yield('js')
 @stop

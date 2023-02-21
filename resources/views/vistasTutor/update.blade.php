@@ -12,8 +12,6 @@
 @section('inputsFormulario')
     <p>DATOS DE CONTACTO PARA EMERGENCIAS</p>
 
-    <p>{{ $persona }}</p>
-
     <div class="mb-3">
         <label for="" class="form-label">Teléfono 1: </label>
         <input type="text" class="form-control" name="telefono_1" id="telefono_1" value="{{ old('telefono_1', $tutor->telefono_1) }}">
@@ -79,7 +77,7 @@
 
     <div class="mb-3">
         <label for="" class="form-label">Número: </label>
-        <input type="text" class="form-control" id="numero" name="numero" value="{{ old('numero',$tutor->numero) }}">
+        <input type="text" placeholder="opcional" class="form-control" id="numero" name="numero" value="{{ old('numero',$tutor->numero) }}">
         @error('numero')
             <small>*{{ $message }}</small>
             <br>

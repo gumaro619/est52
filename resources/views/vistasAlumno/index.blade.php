@@ -1,11 +1,11 @@
 @extends('vistasPersona.formularioIndexPersona')
 
 @section('header')
-    <h1>INDEX ALUMNOS</h1>
+    <h1>ADMINISTRAR  ALUMNOS</h1>
 @endsection
 
-@section('hrefCrear')
-    {{ route('alumnos.create') }}
+@section('bodi')
+    <a href="{{ route('alumnos.create') }}" class="btn btn-primary" id="btnCrear" class="botones">CREAR</a>
 @endsection
 
 @section('columnasTHead')
@@ -21,7 +21,7 @@
     <th scope="col">CURP</th>
     <th scope="col">STATUS</th>
     <th scope="col">FECHA DE INSCRIPCIÓN</th>
-    <th scope="col">GRADO</th>
+    <th scope="col">GRUPO</th>
     <th scope="col">TUTOR</th>
     <th scope="col">Acciones</th>
 @endsection
@@ -29,7 +29,7 @@
 @section('filasTBody')
     @forelse($alumnos as $alumno)
         <tr>
-            <td>{{ $alumno->persona->id }}</td>
+            <td>{{ $alumno->id}}</td>
             <td>{{ $alumno->persona->nombre}}</td>
             <td>{{ $alumno->persona->apellido_p}}</td>
             <td>{{ $alumno->persona->apellido_m}}</td>
@@ -40,8 +40,8 @@
             <td>{{ $alumno->curp}}</td>
             <td>{{ $alumno->status}}</td>
             <td>{{ $alumno->fechaInscripcion}}</td>
-            <td>{{ $alumno->grado}}</td>
-            <td>{{ $alumno->tutor->persona->nombre}}</td>
+            <td>{{ $alumno->grupo->nombre ?? 'No asignado'}}</td>
+            <td>{{ $alumno->tutor->persona->nombre ?? 'No asignado'}}</td>
 
             <td>
                 <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">

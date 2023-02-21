@@ -11,7 +11,6 @@
     <p>Bienvenid@ al  Sistema integral de información de la EST 52.</p>
     <p>A continuación dispone de las opciones principales de  este usuario:</p>
 
-
     <div class="container">
         <div class="row">
             <div class="card" style="width: 18rem;">
@@ -20,6 +19,15 @@
                     <h5 class="card-title">CREDENCIALIZACIÓN</h5>
                     <p class="card-text">Generar, cosultar, descargar credenciales de un alumno o alumnos específico(s)</p>
                     <a href="/credencializacion" class="btn btn-primary stretched-link">Ir a Credencialización</a>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">HORARIOS</h5>
+                    <p class="card-text">Consultar  horarios escolares específicos de cada alumno actualmente activo</p>
+                    <a href="/horarios" class="btn btn-primary stretched-link">Ir a consultar Horarios</a>
                 </div>
             </div>
 
@@ -40,11 +48,8 @@
                     <a href="{{ route('inscripciones.create') }}" class="btn btn-primary stretched-link">Inscribir Alumno</a>
                 </div>
             </div>
-
         </div>
     </div>
-
-
 
     <p>Relación de alumnos inscritos:</p>
     
@@ -52,11 +57,11 @@
         <thead class="bg-primary text-white">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">NOMBRE</th>
-                <th scope="col">APELLIDO P.</th>
-                <th scope="col">APELLIDO M.</th>
+                <th scope="col">NOMBRE COMPLETO</th>
                 <th scope="col">SEXO</th>
                 <th scope="col">EDAD</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">GRUPO</th>
                 <th scope="col">TUTOR.</th>
                 <th scope="col">TEL. PRINCIPAL</th>
                 <th scope="col">Acciones</th>
@@ -65,22 +70,20 @@
         <tbody>
             @forelse($alumnos as $alumno)
                 <tr>
-                    <td>{{ $alumno->persona->id }}</td>
-                    <td>{{ $alumno->persona->nombre}}</td>
-                    <td>{{ $alumno->persona->apellido_p}}</td>
-                    <td>{{ $alumno->persona->apellido_m}}</td>
+                    <td>{{ $alumno->persona->id}}</td>
+                    <td>{{ $alumno->persona->nombre." ".$alumno->persona->apellido_p." ".$alumno->persona->apellido_m}}</td>
                     <td>{{ $alumno->persona->sexo}}</td>
                     <td>{{ date_diff(date_create($alumno->persona->fecha_nacimiento), date_create(now()))->format('%y a ,%m m , %d d ')}}</td>
-                    <td>{{ $alumno->tutor->persona->nombre." ".$alumno->tutor->persona->apellido_p}}</td>
-                    <td>{{ $alumno->tutor->telefono_1}}</td>
+                    
+                    <td>{{ $alumno->status}}</td>
+                    <td>{{ $alumno->grupo->nombre ?? 'sin asignar'}}</td>
+
+
+                    <td>{{ ($alumno->tutor->persona->nombre ?? 'No ')." ".($alumno->tutor->persona->apellido_p ?? 'Asignado')}}</td>
+                    <td>{{  $alumno->tutor->telefono_1 ?? 'No asignado'}}</td>
                     <td>
                             <!-- llamada a un método del objeto materia en cuestión, ni idea de poqeu es materias y no materia -->
-                        <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            
-                            <button type="submit" class="btn btn-danger">Borrar</button>
-                        </form>
+                            <a href="/inscripciones/{{ $alumno->id }}/edit" class="btn btn-info">Editar</a>
                     </td>
                     
                 </tr>
@@ -111,5 +114,22 @@
         $(document).ready(function () {
             $('#tablaInscripciones').DataTable();
         });
+
+        $('#tablaInscripciones').DataTable( {
+            language: {
+                search: "Buscar:",
+                lengthMenu:"Mostrar _MENU_ registros por página",
+                zeroRecords:"No se encontró ningún registro",
+                info: "Mostrando la página _PAGE_ de _PAGES_",
+                infoEmpty: "No hay registros disponibles",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                paginate: {
+                    'next':'siguiente',
+                    'previous':'anterior'
+                }
+
+            }
+        } );
+        
     </script>
 @stop

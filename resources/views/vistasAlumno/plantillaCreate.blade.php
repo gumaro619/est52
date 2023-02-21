@@ -10,12 +10,12 @@
 
 @section('inputsFormulario')
     <p>DATOS INSTITUCIONALES</p>
-    
+
     <div class="mb-3">
         <label for="" class="form-label">CURP: </label>
-        <input type="text" class="form-control" name="curp" id="curp" value="{{ old('curp') }}">
+        <input type="text" class="form-control" name="curp" id="curp" value="{{ old('curp') }}" tabindex="6">
         @error('curp')
-            <small>*{{ $message }}</small>
+            <small class="errores">*{{ $message }}</small>
             <br>
         @enderror
     </div>
@@ -23,7 +23,7 @@
 
     <label class="form-label">Status: </label>
     <div class="form-check">
-        <input type="radio" class="form-check-input" id="activo" name="status" value="activo" {{ old('status') == 'activo' ? 'checked' : '' }}>
+        <input type="radio" class="form-check-input" id="activo" name="status" value="activo" {{ old('status') == 'activo' ? 'checked' : '' }} tabindex="7">
         <label class="form-check-label" for="activo">Activo</label>
     </div>
     <div class="form-check">
@@ -47,17 +47,17 @@
         <label class="form-check-label" for="indeterminado">Indeterminado</label>
         <div class="invalid-feedback">Debe seleccionar el Status</div>
     </div>
-    @error('status')
-        <small>*{{ $message }}</small>
-        <br>
-    @enderror
+        @error('status')
+            <small class="errores">*{{ $message }}</small>
+            <br>
+        @enderror
     <br>
 
     <div class="mb-3">
         <label for="" class="form-label">Feacha de inscripción: </label>
-        <input type="date" class="form-control" id="fechaInscripcion" name="fechaInscripcion" value="{{ old('fechaInscripcion',now()->toDateString()) }}">
+        <input type="date" class="form-control" id="fechaInscripcion" name="fechaInscripcion" value="{{ old('fechaInscripcion',now()->toDateString()) }}" tabindex="8">
         @error('fechaInscripcion')
-            <small>*{{ $message }}</small>
+            <small class="errores">*{{ $message }}</small>
             <br>
         @enderror
     </div>
@@ -65,7 +65,7 @@
 
     <label class="form-label">Grado: </label>
     <div class="form-check">
-        <input type="radio" class="form-check-input" id="primero" name="grado" value="1" {{ old('grado') == '1' ? 'checked' : '' }}>
+        <input type="radio" class="form-check-input" id="primero" name="grado" value="1" {{ old('grado') == '1' ? 'checked' : '' }} tabindex="9">
         <label class="form-check-label" for="primero">1° Primero</label>
     </div>
     <div class="form-check">
@@ -90,7 +90,7 @@
         <div class="invalid-feedback">Debe seleccionar el grado</div>
     </div>
     @error('grado')
-        <small>*{{ $message }}</small>
+        <small class="errores">*{{ $message }}</small>
         <br>
     @enderror
     <br>

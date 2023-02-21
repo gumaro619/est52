@@ -122,17 +122,30 @@ class TutorController extends Controller
         //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
         $this->validate($request, [
             'nombre'=>'required',
-            'apellido_p'=>'required|between:3,10',
+            'apellido_p'=>'required',
             'apellido_m'=>'required',
             'sexo'=>'required',
-            'fecha_nacimiento'=>'required',
-            'telefono_1'=>'required|numeric|digits:10',
-            'telefono_2'=>'required|numeric|digits:10',
-            'correo'=>'required|email',
+            'fecha_nacimiento'=>'required|date|before_or_equal:-18 year',
+            'telefono_1'=>['required','numeric','digits:10'],
+            'telefono_2'=>'nullable|size:10',
+            'correo' => 'nullable|email',
             'estado'=>'required',
             'municipio'=>'required',
             'colonia'=>'required',
             'calle'=>'required',
-        ]);
+        ],
+        [   'nombre.required'=>'El nombre es requerido',
+            'apellido_p.required'=>'El primer apellido es obligatorio',
+            'apellido_m.required'=>'El segundo apellido es obligatorio',
+            'sexo.required'=>'Debe ingresar el sexo del(la) tutor(a)',
+            'email'=>'Ingrese un correo válido',
+            'fecha_nacimiento.required'=>'Es obligatoria la fecha de nacimiento',
+            'fecha_nacimiento.before'=>'El tutor debe tener la mayotía de edad',
+            'telefono_1.required'=>'Debe haber al menos un teléfono principal de contacto para emergencias',
+            'digits'=>'El teléfono debe ser a 10 dígitos, incliuda la lada ',
+            'size'=>'El teléfono debe ser a 10 dígitos, incliuda la lada ',
+            'required'=>'Este campo es obligatorio'
+        ]
+    );
     }
 }

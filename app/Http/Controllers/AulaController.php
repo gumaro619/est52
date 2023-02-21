@@ -35,7 +35,12 @@ class AulaController extends Controller
         $this->validar($request);
         $aula=new Aula();
         $aula->nombre=$request->get('nombre');
-        $aula->comentarios=$request->get('comentarios');
+
+        if($request->get('comentarios')==''){
+            $aula->comentarios="sin comentarios";
+        }else{
+            $aula->comentarios=$request->get('comentarios');
+        }
 
         $aula->save();
         return redirect('/aulas');
@@ -79,8 +84,9 @@ class AulaController extends Controller
     {
         //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
         $this->validate($request, [
-            'nombre'=>'required',
-            'comentarios'=>'required'
+            'nombre'=>'required'
+        ],[
+            'nombre.required'=>'Es obligatorio ingresar un nombre'
         ]);
     }
 }

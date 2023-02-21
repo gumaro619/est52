@@ -25,6 +25,34 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('escuela', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('clave');
+            $table->string('zona')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('mision')->nullable();
+            $table->string('Vision')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('ciclo', function (Blueprint $table) {
+            $table->id();
+            $table->string('ciclo');
+            $table->string('inicio')->nullable();
+            $table->string('cierre')->nullable();
+            $table->integer('vigente');
+            $table->timestamps();
+        });
+
+        Schema::create('aviso', function (Blueprint $table) {
+            $table->id();
+            $table->string('destinatario');
+            $table->string('asunto');
+            $table->string('mensaje')->nullable();
+            $table->string('vigencia');
+            $table->timestamps();
+        });
 
         Schema::create('persona', function (Blueprint $table) {
             $table->id('id');
@@ -39,8 +67,8 @@ return new class extends Migration
             Schema::create('tutor', function (Blueprint $table) {
                 $table->id('id');
                 $table->BigInteger('telefono_1');
-                $table->BigInteger('telefono_2');
-                $table->string('correo');
+                $table->BigInteger('telefono_2')->nullable();
+                $table->string('correo')->nullable();
                 $table->string('estado');
                 $table->string('municipio');
                 $table->string('colonia');
@@ -48,7 +76,11 @@ return new class extends Migration
                 $table->string('numero');
 
                 $table->unsignedBigInteger("persona_id");
-                $table->foreign('persona_id')->references('id')->on('persona');
+                $table->foreign('persona_id')
+                    ->references('id')
+                    ->on('persona')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             });
             
             Schema::create('trabajador', function (Blueprint $table) {
@@ -67,9 +99,9 @@ return new class extends Migration
                     ->onUpdate('cascade');
             });
 
-
                 Schema::create('docente', function (Blueprint $table) {
                     $table->id('id');
+                    $table->string('carpeta')->nullable();
 
                     $table->unsignedBigInteger("trabajador_id");
                     $table->foreign('trabajador_id')
@@ -82,14 +114,15 @@ return new class extends Migration
                     Schema::create('aula', function (Blueprint $table) {
                         $table->id('id');
                         $table->string('nombre');
-                        $table->text('comentarios');
+                        $table->text('comentarios')->nullable();
+                        $table->timestamps();
                     });
 
                     Schema::create('materia', function (Blueprint $table) {
                         $table->id('id');
                         $table->string('nombre');
                         $table->string('programa');
-
+                        $table->timestamps();
                     });
 
                     //tabla inicial
@@ -97,6 +130,13 @@ return new class extends Migration
                         $table->id('id');
                         $table->string('nombre');
                         $table->string('ciclo');
+
+                        $table->unsignedBigInteger("ciclo_id")->nullable();
+                        $table->foreign('ciclo_id')
+                        ->references('id')
+                        ->on('ciclo')
+                        ->onDelete('set null')
+                        ->onUpdate('cascade');
                         $table->timestamps();
                     });
 
@@ -131,9 +171,9 @@ return new class extends Migration
                     ->references('id')
                     ->on('aula')
                     ->onDelete('set null');
+
+                    $table->timestamps();
                 });
-
-
 
         Schema::create('alumno', function (Blueprint $table) {
             $table->id('id');
@@ -166,9 +206,10 @@ return new class extends Migration
             Schema::create('calificacion', function (Blueprint $table) {
                 $table->id('id');
                 $table->integer('periodo');
-                $table->boolean('examenR');
+                $table->string('examenR');
                 $table->float('calificacion');
                 $table->integer('faltas');
+                $table->integer('retardos')->nullable();
                 
                 $table->unsignedBigInteger("alumno_id");
                 $table->foreign('alumno_id')
@@ -205,6 +246,8 @@ return new class extends Migration
                     ->on('trabajador')
                     ->onDelete('set null');
 
+
+                $table->timestamps();    
             });
 
     }

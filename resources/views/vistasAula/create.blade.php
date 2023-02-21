@@ -11,15 +11,16 @@
     <form action="/aulas" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="" class="form-label">Nombre</label>
+            <label for="" class="form-label">Nombre</label><br>
+            <small id="nombre" class="form-text">nombre o tag para identificar el aula</small>
             <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp"
             value="{{ old('nombre') }}">
-            {!! $errors->first('nombre','<span class=error>:message</span>') !!}
-            <div id="nombre" class="form-text">nombre o tag para identificar el grupo</div>
+            <p class="errores">{!! $errors->first('nombre','<span class=error>:message</span>') !!}</p>
+            
         </div>
 
         <div class="mb-3">
-            <label for="" class="form-label">Comentarios</label>
+            <label for="" class="form-label">Comentarios</label><small>(Opcional)</small>
             <textarea name="comentarios" id="comentarios" class="form-control" value="{{ old('comentarios') }}"></textarea>
             {!! $errors->first('comentarios','<span class=error>:message</span>') !!}
         </div>
@@ -33,6 +34,11 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .errores{
+            color: brown;
+        }
+    </style>
 @stop
 
 @section('js')

@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => '',
     'title_prefix' => '',
-    'title_postfix' => '',
+    'title_postfix' => '|SII EST52',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>EST </b>52',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'imgs/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -130,10 +130,10 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
     'usermenu_profile_url' => false,
 
     /*
@@ -150,8 +150,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -187,7 +187,7 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => '',
+    'classes_brand' => 'bg-white',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
@@ -256,7 +256,7 @@ return [
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    'register_url' => 'registrar',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
     'profile_url' => false,
@@ -294,7 +294,7 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -306,24 +306,131 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+        ['header' => 'OPCIONES DE USUARIO'],
+        [
+            'text'    => 'Acciones Secretaria',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Dashboard',
+                    'url'  => '/secretarias',
+                ],
+                [
+                    'text'    => 'Alumnado',
+                    'url'     => '/secretarias/alumnos',
+                    
+                ],
+                [
+                    'text' => 'Editar tutores',
+                    'url'  => '/secretarias/tutores',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Coordinación Académica',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Inscripción de Alumnos',
+                    'url'  => 'inscripciones/create',
+                ],
+                [
+                    'text'    => 'Baja de alumnos',
+                    'url'     => '/bajas',
+                    
+                ],
+                [
+                    'text' => 'Administrar Alumnos',
+                    'url'  => '/alumnos',
+                ],
+                [
+                    'text' => 'Administrar tutores',
+                    'url'  => '/tutores',
+                ],
+                [
+                    'text' => 'Administrar  grupos',
+                    'url'  => '/grupos',
+                ],
+                [
+                    'text' => 'Administrar horarios',
+                    'url'  => '/horarios',
+                    'icon'    => 'fas fa-fw fa-share',
+                    'submenu' => [
+                        [
+                            'text' => 'Horarios',
+                            'url'  => '/horarios',
+                        ],
+                        [
+                            'text'    => 'Clases',
+                            'url'     => '/clases',
+                        ],
+                    ],
+                ],
+                [
+                    'text' => 'Asignación de materias',
+                    'url'  => '/materias',
+                ],
+                [
+                    'text' => 'Administrar aulas',
+                    'url'  => '/aulas',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Acciones Directivas',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Administrar  datos del Alumnado',
+                    'url'  => '/alumnos',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Docentes',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'LOGIN ARTIFICIAL',
+                    'url'  => '/docente',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Tutores',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Centro de información para tutores',
+                    'url'  => '/tutor',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Trabajador',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Prefectos',
+                    'url'  => '/trabajador',
+                ],
+                [
+                    'text' => 'Desarrollo Ac.',
+                    'url'  => '/trabajador',
+                ],
+            ],
+        ],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'S. Inscripciones',
-            'url'         => '/inscripciones',
+            'text'        => 'CURP',
+            'url'         => '/curp',
             'icon'        => 'far fa-fw fa-file',
-            'label'       => 'C',
-            'label_color' => 'warning',
-        ],
-        [
-            'text'        => 'S. Inscripción',
-            'url'         => '/inscripcion',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 'C',
-            'label_color' => 'warning',
+            'label'       => 'Test',
+            'label_color' => 'danger',
         ],
         [
             'text'        => 'Clases',

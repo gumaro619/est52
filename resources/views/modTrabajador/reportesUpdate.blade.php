@@ -166,6 +166,8 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
@@ -200,6 +202,34 @@
             });
 
         });
+
+        
+
+        $('#formReporte').submit(function (evt) {
+                evt.preventDefault(); 
+                
+                Swal.fire({
+                title: '¿Desea actualizar el reporte?',
+                text: "Se actualizaran los datos del reporte",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, actualizar reporte'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                    Swal.fire(
+                    'actualizado!',  
+                    'el reporte bha sido actualizado',
+                    'success'
+)
+                }
+                })
+            });
+
+
     </script>
     <script>
         function editar(){
